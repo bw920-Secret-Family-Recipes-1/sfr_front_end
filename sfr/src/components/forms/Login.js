@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
+import AxiosAuth from '../../utils/AxiosAuth'
 
 const Login = ({ errors, touched, values }) => {
   return (
@@ -11,12 +12,12 @@ const Login = ({ errors, touched, values }) => {
       <Form>
         <Field
           type='text'
-          name='userName'
-          placeholder='User Name'
+          name='username'
+          placeholder='Username'
           autoComplete='user-name'
           className='input'
         />
-        {touched.userName && errors.userName && <p className='error'>{errors.userName}</p>}
+        {touched.username && errors.username && <p className='error'>{errors.username}</p>}
         <Field
           type='password'
           name='password'
@@ -36,15 +37,15 @@ const Login = ({ errors, touched, values }) => {
 }
 
 const FormikApp = withFormik({
-  mapPropsToValues({ userName, password }) {
+  mapPropsToValues({ username, password }) {
     return {
-      userName: userName || '',
+      username: username || '',
       password: password || '',
       
     }
   },
   validationSchema: Yup.object().shape({
-    userName: Yup.string()
+    username: Yup.string()
       .required('Username Required'),
     password: Yup.string()
       .min(2, 'Password Too Short')
@@ -52,11 +53,11 @@ const FormikApp = withFormik({
       .required(),
   }),
   handleSubmit(values, { setStatus, resetForm }) {
-    axios
+    AxiosAuth()
       .post("https://secretrecipebw.herokuapp.com/auth/login", values)
       .then(res => {
         setStatus(res.data);
-        console.log(res);
+        console.log("Login successful",res);
         resetForm();
       })
       .catch(error => console.log(error.response));

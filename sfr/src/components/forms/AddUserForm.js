@@ -2,6 +2,8 @@ import React from 'react'
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
+import AxiosAuth from '../../utils/AxiosAuth'
 
 const SignUp = ({ errors, touched, values }) => {
   return (
@@ -27,12 +29,12 @@ const SignUp = ({ errors, touched, values }) => {
         {touched.lastName && errors.lastName && <p className='error'>{errors.lastName}</p>}
         <Field
           type='text'
-          name='userName'
-          placeholder='User Name'
+          name='username'
+          placeholder='Username'
           autoComplete='user-name'
           className='input'
         />
-        {touched.userName && errors.userName && <p className='error'>{errors.userName}</p>}
+        {touched.username && errors.username && <p className='error'>{errors.username}</p>}
         <Field
           type='email'
           name='email'
@@ -52,10 +54,6 @@ const SignUp = ({ errors, touched, values }) => {
         {touched.password && errors.password && (
           <p className='error'>{errors.password}</p>
         )}
-        <label className='term'>
-          <Field type='checkbox' name='term' checked={values.term} /> I agree to
-          the <a href='https://www.merriam-webster.com/dictionary/Kafkaesque'>Terms and Conditions</a>
-        </label>
         <button type='submit' className='submit'>
           Submit
         </button>
@@ -64,15 +62,15 @@ const SignUp = ({ errors, touched, values }) => {
   )
 }
 
+
 const FormikApp = withFormik({
-  mapPropsToValues({ firstName, lastName, userName, email, password, term }) {
+  mapPropsToValues({ firstName, lastName, username, email, password }) {
     return {
       firstName: firstName || '',
       lastName: lastName || '',
-      userName: userName || '',
+      username: username || '',
       email: email || '',
       password: password || '',
-      term: term || false
     }
   },
   validationSchema: Yup.object().shape({
@@ -80,8 +78,8 @@ const FormikApp = withFormik({
       .required('Name Required'),
     lastName: Yup.string()
       .required('Name Required'),
-    userName: Yup.string()
-      .required('Username Required'),
+    username: Yup.string()
+      .required('username Required'),
     email: Yup.string()
       .email('Invalid email')
       .required('Email is Required'),
@@ -90,13 +88,16 @@ const FormikApp = withFormik({
       .max(28, 'Password Too Long')
       .required(),
   }),
-  handleSubmit(values, { setStatus, resetForm }) {
-    axios
+
+  handleSubmit(values, { setStatus }){
+    console.log("User submitted");
+    AxiosAuth()
       .post("https://secretrecipebw.herokuapp.com/auth/register", values)
       .then(res => {
         setStatus(res.data);
         console.log(res);
-        resetForm();
+        console.log("User submitted");
+        React.history.push('/Home');
       })
       .catch(error => console.log(error.response));
   }
