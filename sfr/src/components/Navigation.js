@@ -17,7 +17,7 @@ const Navigation = (props) => {
                             <NavLink href="/addRecipePage">Add Recipe</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink >Sign Up</NavLink>
+                            <NavLink href="/sign-up" >Sign Up</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink >Logout</NavLink>
