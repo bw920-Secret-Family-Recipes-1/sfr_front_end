@@ -17,7 +17,16 @@ const AddRecipe = ({ errors, touched, values }) => {
         />
         {touched.recipeName && errors.recipeName && <p className='error'>{errors.recipeName}</p>}
 
-        {/* TODO add category */}
+            <Field as="select" name="category">
+              <option value="none">Choose a category</option>
+             <option value="appetizer">Appetizer</option>
+             <option value="entree">Entree</option>
+             <option value="dessert">dessert</option>
+             <option value="beverage">beverage</option>
+           </Field>
+                   {touched.category && errors.category && <p className='error'>{errors.category}</p>}
+
+        {/*TODO: add an button for additional ingredients */}
         <Field
           type='text'
           name='ingredientList'
@@ -61,13 +70,14 @@ const AddRecipe = ({ errors, touched, values }) => {
 }
 
 const FormikApp = withFormik({
-  mapPropsToValues({ recipeName, ingredientList, directions, source, description}) {
+  mapPropsToValues({ recipeName, category, ingredientList, directions, source, description}) {
     return {
       recipeName: recipeName || '',
       ingredientList: ingredientList || '',
       directions: directions || '',
       source: source || '',
       description: description || '',
+      category: category || '',
     }
   },
   validationSchema: Yup.object().shape({
@@ -75,10 +85,12 @@ const FormikApp = withFormik({
       .required('Recipe Name Required'),
       ingredientList: Yup.string()
       .required('IngredientList Required'),
+      category: Yup.string()
+      .oneOf(['appetizer', 'entree', 'dessert', 'beverage']).required('please choose a category'),
   }),
   handleSubmit(values, { resetForm }) {
-    console.log(values)
-    resetForm()
+    console.log(values);
+    resetForm();
   }
 })
 const SingleRecipe = FormikApp(AddRecipe)

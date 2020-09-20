@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
+import axios from 'axios'
 
 const SignUp = ({ errors, touched, values }) => {
   return (
@@ -89,9 +90,15 @@ const FormikApp = withFormik({
       .max(28, 'Password Too Long')
       .required(),
   }),
-  handleSubmit(values, { resetForm }) {
-    console.log(values)
-    resetForm()
+  handleSubmit(values, { setStatus, resetForm }) {
+    axios
+      .post("https://secretrecipebw.herokuapp.com/auth/register", values)
+      .then(res => {
+        setStatus(res.data);
+        console.log(res);
+        resetForm();
+      })
+      .catch(error => console.log(error.response));
   }
 })
 const PopulatedSignUpForm = FormikApp(SignUp)

@@ -9,6 +9,7 @@ import PrivateRoute from './components/PrivatRoute';
 
 import PopulatedSignUpForm from './components/forms/AddUserForm';
 import SingleRecipe from './components/forms/AddRecipeForm';
+import PopulatedLoginForm from './components/forms/Login';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Switch>
             <PrivateRoute exact path="/recipe-page" component={RecipeList} />
             <Route exact path='/sign-up' component={PopulatedSignUpForm}/>
+            <Route exact path='/login' component={PopulatedLoginForm}/>
             <Route exact path='/addRecipePage' component={SingleRecipe}/>
             <RecipeList />
           </Switch>
