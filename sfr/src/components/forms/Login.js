@@ -2,13 +2,14 @@ import React from 'react'
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
+// import { useHistory } from 'react-router-dom'
 import AxiosAuth from '../../utils/AxiosAuth'
+import Navigation from '../Navigation';
 
-const Login = ({ errors, touched, values }) => {
+const Login = ({ errors, touched }) => {
   return (
     <div className='form-container'>
       <h1>Login!</h1>
-
       <Form>
         <Field
           type='text'
@@ -41,7 +42,7 @@ const FormikApp = withFormik({
     return {
       username: username || '',
       password: password || '',
-      
+
     }
   },
   validationSchema: Yup.object().shape({
@@ -52,13 +53,14 @@ const FormikApp = withFormik({
       .max(28, 'Password Too Long')
       .required(),
   }),
-  handleSubmit(values, { setStatus, resetForm }) {
+  handleSubmit(values, { setStatus }) {
     AxiosAuth()
       .post("https://secretrecipebw.herokuapp.com/auth/login", values)
       .then(res => {
         setStatus(res.data);
-        console.log("Login successful",res);
-        resetForm();
+        localStorage.setItem('token', res.data.token)
+        console.log("Login successful", res);
+        // history.push('/')
       })
       .catch(error => console.log(error.response));
   }

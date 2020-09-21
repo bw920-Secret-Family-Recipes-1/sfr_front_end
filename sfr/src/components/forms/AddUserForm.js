@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import AxiosAuth from '../../utils/AxiosAuth'
 
 const SignUp = ({ errors, touched, values }) => {
@@ -75,29 +75,29 @@ const FormikApp = withFormik({
   },
   validationSchema: Yup.object().shape({
     firstName: Yup.string()
-      .required('Name Required'),
+    .required('Name Required'),
     lastName: Yup.string()
-      .required('Name Required'),
+    .required('Name Required'),
     username: Yup.string()
-      .required('username Required'),
+    .required('username Required'),
     email: Yup.string()
-      .email('Invalid email')
-      .required('Email is Required'),
+    .email('Invalid email')
+    .required('Email is Required'),
     password: Yup.string()
-      .min(2, 'Password Too Short')
-      .max(28, 'Password Too Long')
-      .required(),
+    .min(2, 'Password Too Short')
+    .max(28, 'Password Too Long')
+    .required(),
   }),
-
+  
   handleSubmit(values, { setStatus }){
     console.log("User submitted");
     AxiosAuth()
-      .post("https://secretrecipebw.herokuapp.com/auth/register", values)
-      .then(res => {
+    .post("https://secretrecipebw.herokuapp.com/auth/register", values)
+    .then(res => {
         setStatus(res.data);
         console.log(res);
         console.log("User submitted");
-        React.history.push('/Home');
+        // history.push('/Home');
       })
       .catch(error => console.log(error.response));
   }
