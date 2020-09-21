@@ -2,21 +2,23 @@ import React from 'react'
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
+// import { useHistory } from 'react-router-dom'
+import AxiosAuth from '../../utils/AxiosAuth'
+import Navigation from '../Navigation';
 
-const Login = ({ errors, touched, values }) => {
+const Login = ({ errors, touched }) => {
   return (
     <div className='form-container'>
       <h1>Login!</h1>
-
       <Form>
         <Field
           type='text'
-          name='userName'
-          placeholder='User Name'
+          name='username'
+          placeholder='Username'
           autoComplete='user-name'
           className='input'
         />
-        {touched.userName && errors.userName && <p className='error'>{errors.userName}</p>}
+        {touched.username && errors.username && <p className='error'>{errors.username}</p>}
         <Field
           type='password'
           name='password'
@@ -36,28 +38,29 @@ const Login = ({ errors, touched, values }) => {
 }
 
 const FormikApp = withFormik({
-  mapPropsToValues({ userName, password }) {
+  mapPropsToValues({ username, password }) {
     return {
-      userName: userName || '',
+      username: username || '',
       password: password || '',
-      
+
     }
   },
   validationSchema: Yup.object().shape({
-    userName: Yup.string()
+    username: Yup.string()
       .required('Username Required'),
     password: Yup.string()
       .min(2, 'Password Too Short')
       .max(28, 'Password Too Long')
       .required(),
   }),
-  handleSubmit(values, { setStatus, resetForm }) {
-    axios
+  handleSubmit(values, { setStatus }) {
+    AxiosAuth()
       .post("https://secretrecipebw.herokuapp.com/auth/login", values)
       .then(res => {
         setStatus(res.data);
-        console.log(res);
-        resetForm();
+        localStorage.setItem('token', res.data.token)
+        console.log("Login successful", res);
+        // history.push('/')
       })
       .catch(error => console.log(error.response));
   }

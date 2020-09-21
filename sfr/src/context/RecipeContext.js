@@ -5,11 +5,11 @@ export const RecipeContext = createContext();
 export const RecipeProvider = (props) => {
     const [recipes, setRecipes] = useState([
         {
+            id: 1,
             firstName: "bob",
             lastName: "johnson",
             email: "bob@email.com",
             password: "pass1",
-            id: 1,
             recipe: {
                 recipeName: "Apple Pie",
                 category: "dessert",
@@ -19,11 +19,11 @@ export const RecipeProvider = (props) => {
             }
         },
         {
+            id: 2,
             firstName: "leah",
             lastName: "raw",
             email: "leah@email.com",
             password: "pass2",
-            id: 2,
             recipe: {
                 recipeName: "Kraft Mac n' Cheese",
                 category: "side",

@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { axiosWithAuth } from '../../utils/AxiosAuth';
+import AxiosAuth  from '../../utils/AxiosAuth';
 import RecipeContext from './recipeContext';
 
 
@@ -19,7 +19,7 @@ const RecipeState = props => {
 
     // Get recipes
     const getRecipe = id => {
-        axiosWithAuth()
+        AxiosAuth()
             .get(`/recipes/${id}`)
             .then(res =>
                 dispatch({
@@ -32,7 +32,7 @@ const RecipeState = props => {
 
     // Add recipe
     const addRecipe = recipe => {
-        axiosWithAuth()
+        AxiosAuth()
             .post('/recipes', recipe)
             .then(res =>
                 dispatch({
@@ -45,7 +45,7 @@ const RecipeState = props => {
 
     // Delete recipe
     const deleteRecipe = id => {
-        axiosWithAuth()
+        AxiosAuth()
             .delete(`/recipes/${id}`)
             .then(dispatch({ type: DELETE_RECIPE, payload: id }))
             .catch(err => console.log(err));

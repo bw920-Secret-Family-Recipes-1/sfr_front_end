@@ -18,10 +18,10 @@ function App() {
         <div className="App">
           <Navigation />
           <Switch>
-            <PrivateRoute exact path="/recipe-page" component={RecipeList} />
-            <Route exact path='/sign-up' component={PopulatedSignUpForm}/>
-            <Route exact path='/login' component={PopulatedLoginForm}/>
-            <Route exact path='/addRecipePage' component={SingleRecipe}/>
+            <PrivateRoute exact path="/" component={RecipeList} />
+            <Route exact path='/sign-up' component={PopulatedSignUpForm} />
+            <Route exact path='/login' component={PopulatedLoginForm} />
+            <PrivateRoute exact path='/addRecipePage' component={SingleRecipe} />
             <RecipeList />
           </Switch>
         </div>
