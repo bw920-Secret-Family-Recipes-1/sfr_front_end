@@ -1,8 +1,6 @@
 import React from 'react'
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
-import axios from 'axios'
-// import { useHistory } from 'react-router-dom'
 import AxiosAuth from '../../utils/AxiosAuth'
 
 const SignUp = ({ errors, touched, values }) => {
@@ -97,7 +95,7 @@ const FormikApp = withFormik({
         setStatus(res.data);
         console.log(res);
         console.log("User submitted");
-        // history.push('/Home');
+        window.location.assign('/')
       })
       .catch(error => console.log(error.response));
   }
