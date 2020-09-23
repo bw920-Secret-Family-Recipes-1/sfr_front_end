@@ -1,12 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const RecipeCard = (props) => {
 
-    return(
-        <div className="recipe-card">
-            <h3>{props.name}</h3>
-            <p>{props.description}</p>
-        </div>
+const RecipeCard = ({ recipeName, source, id }) => {
+
+    return (
+        <Link to={`/${id}`}>
+            <div className="recipe-card">
+                <h3 className="recipe-name">{recipeName}</h3>
+                <p>By: {source}</p>
+            </div>
+        </Link>
     )
 }
 

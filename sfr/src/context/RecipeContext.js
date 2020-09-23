@@ -1,38 +1,28 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
+import AxiosAuth from '../utils/AxiosAuth'
 
 export const RecipeContext = createContext();
 
 export const RecipeProvider = (props) => {
-    const [recipes, setRecipes] = useState([
-        {
-            id: 1,
-            firstName: "bob",
-            lastName: "johnson",
-            email: "bob@email.com",
-            password: "pass1",
-            recipe: {
-                recipeName: "Apple Pie",
-                category: "dessert",
-                ingredientList: ["1 apple", "1 cup sugar", "1 pie crust"],
-                directions: "",
-                description: "An American classic",
-            }
-        },
-        {
-            id: 2,
-            firstName: "leah",
-            lastName: "raw",
-            email: "leah@email.com",
-            password: "pass2",
-            recipe: {
-                recipeName: "Kraft Mac n' Cheese",
-                category: "side",
-                ingredientList: ["cheese", "milk", "macaroni"],
-                directions: "",
-                description: "It's the cheesiest",
-            },
-        },
-    ]);
+    const [recipes, setRecipes] = useState([]);
+
+    useEffect(() => {
+        const getRecipes = () => {
+            AxiosAuth()
+                .get('https://secretrecipebw.herokuapp.com/recipes')
+                .then(res => {
+                    // console.log('recipes: ', res);
+                    setRecipes(res.data);
+                })
+                .catch(error => {
+                    console.error('Server Error', error);
+                });
+        }
+        getRecipes();
+    }, []);
+
+
+
 
     return (
         <RecipeContext.Provider value={[recipes, setRecipes]}>

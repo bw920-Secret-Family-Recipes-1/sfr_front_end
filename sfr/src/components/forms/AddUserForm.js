@@ -95,7 +95,7 @@ const FormikApp = withFormik({
         setStatus(res.data);
         console.log(res);
         console.log("User submitted");
-        window.location.assign('/')
+        window.location.assign('/user')
       })
       .catch(error => console.log(error.response));
   }

@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import AuthContext from '../context/AuthContext';
 
 const Navigation = (props) => {
     const [collapsed, setCollapsed] = useState(true);
-
     const toggleNavbar = () => setCollapsed(!collapsed);
+    const authContext = useContext(AuthContext);
+    const { loadUser, isAuthenticated, logout } = authContext;
 
     return (
         <div>
             <Navbar color="warning" light>
-                <NavbarBrand href="/" className="mr-auto">Secret Family Recipe</NavbarBrand>
+                <NavbarBrand href="/user" className="mr-auto">Secret Family Recipe</NavbarBrand>
                 <NavbarToggler onClick={toggleNavbar} className="mr-2" />
                 <Collapse isOpen={!collapsed} navbar>
                     <Nav navbar>
@@ -23,7 +25,7 @@ const Navigation = (props) => {
                             <NavLink href="/login">Login</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/login" >Logout</NavLink>
+                            <NavLink href='/login'   onClick={logout}>Logout</NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>

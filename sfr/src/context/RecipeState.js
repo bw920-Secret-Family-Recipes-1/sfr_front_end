@@ -1,49 +1,43 @@
 import React, { useReducer } from 'react';
-import AxiosAuth  from '../../utils/AxiosAuth';
-import RecipeContext from './recipeContext';
-
-
-export const GET_RECIPES = 'GET_RECIPES';
-export const ADD_RECIPES = 'ADD_RECIPES';
-export const DELETE_RECIPES = 'DELETE_RECIPES';
-export const UPDATE_RECIPES = 'UPDATE_RECIPES';
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
+import AxiosAuth from '../../utils/AxiosAuth';
+import RecipeContext from './RecipeContext';
+import RecipeReducer from './RecipeReducer';
+import { GET_RECIPES, ADD_RECIPE, DELETE_RECIPE, UPDATE_RECIPE } from '../Types';
 
 const RecipeState = props => {
     const initialState = {
         recipes: []
     };
 
-    const [state, dispatch] = useReducer(recipeReducer, initialState);
+    const [state, dispatch] = useReducer(RecipeReducer, initialState);
 
-    // Get recipes
-    const getRecipe = id => {
+    const getRecipes = id => {
         AxiosAuth()
             .get(`/recipes/${id}`)
-            .then(res =>
+            .then(res =>{
+                console.log("recipe:", res)
                 dispatch({
                     type: GET_RECIPES,
                     payload: res.data
                 })
+            }
+                
             )
             .catch(err => console.log(err));
     };
 
-    // Add recipe
     const addRecipe = recipe => {
         AxiosAuth()
             .post('/recipes', recipe)
             .then(res =>
                 dispatch({
-                    type: ADD_recipe,
+                    type: ADD_RECIPE,
                     payload: res.data
                 })
             )
             .catch(err => console.log(err));
     };
 
-    // Delete recipe
     const deleteRecipe = id => {
         AxiosAuth()
             .delete(`/recipes/${id}`)
@@ -51,20 +45,27 @@ const RecipeState = props => {
             .catch(err => console.log(err));
     };
 
-    // Update recipe
-    
+    const updateRecipe = (id, recipe) => {
+        AxiosAuth()
+            .put(`/recipes/${id}`, recipe)
+            .then(res => {
+                dispatch({ type: UPDATE_RECIPE, payload: res.data });
+            })
+            .catch(err => console.log(err));
+    };
 
     return (
         <RecipeContext.Provider
             value={{
                 recipes: state.recipes,
-                getRecipe,
+                getRecipes,
                 addRecipe,
                 deleteRecipe,
+                updateRecipe
             }}
         >
             {props.children}
-    </RecipeContext.Provider>
+        </RecipeContext.Provider>
     );
 };
 
