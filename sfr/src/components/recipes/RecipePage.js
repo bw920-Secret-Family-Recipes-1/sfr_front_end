@@ -1,53 +1,50 @@
 import React, { useContext, useEffect } from 'react';
+import AxiosAuth from '../../utils/AxiosAuth'
 import { useParams } from 'react-router-dom';
+
+// Context
 import { RecipeContext } from '../../context/RecipeContext'
-import AxiosAuth from '../../utils/AxiosAuth';
 
 const RecipePage = () => {
-    const [recipes, setRecipes] = useContext(RecipeContext)
-    // const { id } = useParams();
+    const [recipes, setRecipes] = useContext(RecipeContext);
+    const { id } = useParams();
 
-    // useEffect(() => {
-    //     AxiosAuth()
-    //         .get(`https://secretrecipebw.herokuapp.com/auth/recipe/${id}`)
-    //         .then(response => {
-    //             setRecipe(response.data);
-    //             console.log('updated the movie');
-    //         })
-    //         .catch(error => {
-    //             console.error(error);
-    //         });
-    // }, [id]);
+    useEffect(() => {
+        AxiosAuth()
+            .get(`https://secretrecipebw.herokuapp.com/recipes/${id}`)
+            .then(res => {
+                setRecipes(res.data[0]);
+                console.log('from recipePAGE:', res.data[0])
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }, [id]);
 
 
+    if (!recipes) {
+        return <div>Loading Recipe...</div>;
+    }
 
-    // if (!recipes) {
-    //     return <div>Loading...</div>;
-    // }
-
-    const { recipeName, ingredientList, directions, description } = recipes;
     return (
-        <div className="recipe-page-wrapper">
-            <div className="recipe-card">
-                <h2 className="recipe-name">{recipeName}</h2>
-                <div className="description">
-                    <p>{description}</p>
-                </div>
-                <div className="ingredient-list">
-                    <h3>Ingredients</h3>
-                    {ingredientList.map(ingredient => (
-                        <div className="ingredient">
-                            {ingredient}
-                        </div>
-                    ))}
+        <div className="">
+            <div className="recipe-wrapper">
+                <h2>{recipes.recipeName}</h2>
+                <h4>From: {recipes.source}</h4>
+                <h4>{recipes.categoryName}</h4>
+                <div className="ingredients-directions-wrapper">
+                    <div className="ingredientList">
+                        Ingredients: <p>{recipes.ingredientList}</p>
+                    </div>
                     <div className="directions">
-                        <h3>Directions</h3>
+                        Directions: <p>{recipes.directions}</p>
                     </div>
                 </div>
+
             </div>
-            <div className="save-button">Save</div>
-        </div >
+            <div className="btn btn-md btn-primary">Edit</div>
+        </div>
     );
-}
+};
 
 export default RecipePage;

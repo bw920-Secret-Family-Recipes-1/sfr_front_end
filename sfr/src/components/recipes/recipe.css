@@ -1,0 +1,17 @@
+.recipe-name {
+  color: #ff9633;
+}
+
+.ingredients-directions-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 4rem;
+}
+
+.ingredientList {
+  width: 30%;
+}
+
+.directions {
+  width: 50%;
+}

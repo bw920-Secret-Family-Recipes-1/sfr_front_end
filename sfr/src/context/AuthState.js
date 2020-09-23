@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
 import AuthContext from './AuthContext';
-import authReducer from './AuthReducer';
-import AxiosAuth from '../../utils/AxiosAuth';
-import { USER_LOADED, LOGIN, UPDATE_USER, LOGOUT } from '../types';
+import AuthReducer from './AuthReducer';
+import AxiosAuth from '../utils/AxiosAuth';
+import { USER_LOADED, LOGIN, UPDATE_USER, LOGOUT } from './Types';
 
 const AuthState = props => {
     const initialState = {
@@ -10,7 +10,7 @@ const AuthState = props => {
         isAuthenticated: null
     };
 
-    const [state, dispatch] = useReducer(authReducer, initialState);
+    const [state, dispatch] = useReducer(AuthReducer, initialState);
 
     // Load User
     const loadUser = () => {
@@ -36,7 +36,7 @@ const AuthState = props => {
 
     // Update User
     const updateUser = (id, formData) => {
-        axiosWithAuth()
+        AxiosAuth()
             .put(`/users/${id}`, formData)
             .then(dispatch({ type: UPDATE_USER }))
             .catch(err => console.log(err));

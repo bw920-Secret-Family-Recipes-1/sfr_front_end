@@ -1,45 +1,32 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import RecipeCard from './RecipeCard'
-import { Link, useParams } from 'react-router-dom'
+
+// Context
 import { RecipeContext } from '../../context/RecipeContext'
-import AxiosAuth from '../../utils/AxiosAuth'
-import RecipePage from './RecipePage';
 
 
 const RecipeList = () => {
-    const [recipes, setRecipes] = useContext(RecipeContext)
-    const { id } = useParams();
-    // useEffect(() => {
-    //     const getRecipes = () => {
-    //         AxiosAuth()
-    //             .get('http://localhost:5000/api/movies')
-    //             .then(res => {
-    //                 setRecipes(res.data);
-    //             })
-    //             .catch(error => {
-    //                 console.error('Server Error', error);
-    //             });
-    //     }
-    //     getRecipes();
-    // }, []);
+    const [recipes] = useContext(RecipeContext);
 
     return (
         <div >
             <div className="user-banner">
-                <h3>Welcome back!</h3>
+                <h3>My Recipes!</h3>
             </div>
-            
-                <div className="recipe-list">
-                    {recipes.map(user => (
-                        <div key={user.id}>
-                            <RecipeCard
-                                name={user.recipe.recipeName}
-                                description={user.recipe.description}
-                            />
-                        </div>
-                    ))}
-                </div>
-            
+
+            <div className="recipe-list">
+                {recipes.map(recipe => (
+                    <div key={recipe.id}>
+                        <RecipeCard
+                            recipeName={recipe.recipeName}
+                            source={recipe.source}
+                            ingredients={recipe.ingredients}
+                            id={recipe.id}
+                        />
+                    </div>
+                ))}
+            </div>
+
         </div>
     )
 }

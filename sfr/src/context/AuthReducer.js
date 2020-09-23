@@ -1,4 +1,4 @@
-import { USER_LOADED, LOGIN, UPDATE_USER, LOGOUT } from '../types';
+import { USER_LOADED, LOGIN, UPDATE_USER, LOGOUT } from './Types';
 import jwt from 'jwt-decode';
 
 export default (state, action) => {
