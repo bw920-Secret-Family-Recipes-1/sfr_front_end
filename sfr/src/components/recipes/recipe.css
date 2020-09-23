@@ -1,11 +1,23 @@
+.recipe-page-container {
+  padding: 1.5rem;
+  text-align: justify;
+}
+
 .recipe-name {
   color: #ff9633;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 2rem;
+}
+
+.recipe-wrapper{
+  padding:2rem;
 }
 
 .ingredients-directions-wrapper {
   display: flex;
   justify-content: space-between;
-  margin: 4rem;
+  margin-top: 2rem;
 }
 
 .ingredientList {

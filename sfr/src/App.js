@@ -11,7 +11,6 @@ import PopulatedLoginForm from './components/forms/Login';
 
 // Styles
 import './App.css';
-import './components/recipes/recipe.css';
 
 // Context
 import { RecipeProvider } from './context/RecipeContext';
@@ -32,7 +31,7 @@ function App() {
                 <Route exact path='/login' component={PopulatedLoginForm} />
                 <PrivateRoute exact path="/user" component={RecipeList} />
                 <PrivateRoute exact path='/addRecipePage' component={SingleRecipe} />
-                <Route path="/:id">
+                <Route path="/recipe/:id">
                   <RecipePage />
                 </Route>
                 <RecipeList />
