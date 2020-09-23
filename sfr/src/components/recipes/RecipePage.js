@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import AxiosAuth from '../../utils/AxiosAuth'
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 // Context
 import { RecipeContext } from '../../context/RecipeContext'
+// Style
+import './recipe.css';
 
 const RecipePage = () => {
     const [recipes, setRecipes] = useContext(RecipeContext);
@@ -21,28 +23,40 @@ const RecipePage = () => {
             });
     }, [id]);
 
+    // AxiosAuth()
+    //     .put(`https://secretrecipebw.herokuapp.com/recipes/${Edit.id}`, recipeToEdit)
+    //     .then((res) => {
+    //         const editedRecipe = recipes.filter((recipe) => recipe.id !== recipeToEdit.id);
+    //         updateRecipe([...editedRecipe, { ...recipeToEdit }]);
+    //         console.log(`Saved ${res.data.recipe}`, res)
+    //     })
+    //     .catch((err) => console.log(err));
+
 
     if (!recipes) {
         return <div>Loading Recipe...</div>;
     }
 
+
     return (
-        <div className="">
+        <div className="recipe-page-container">
+            <Link className="btn btn-md btn-primary" to={`/recipe/`}>Edit</Link>
             <div className="recipe-wrapper">
-                <h2>{recipes.recipeName}</h2>
-                <h4>From: {recipes.source}</h4>
-                <h4>{recipes.categoryName}</h4>
+                <h2 className="recipe-name">{recipes.recipeName}</h2>
+                <em className="category">{recipes.categoryName}</em>
+                <h4 className="source">By: {recipes.source}</h4>
                 <div className="ingredients-directions-wrapper">
                     <div className="ingredientList">
-                        Ingredients: <p>{recipes.ingredientList}</p>
+                        <h4>Ingredients: </h4>
+                        <p>{recipes.ingredientList}</p>
                     </div>
                     <div className="directions">
-                        Directions: <p>{recipes.directions}</p>
+                        <h4>Directions: </h4>
+                        <p>{recipes.directions}</p>
                     </div>
                 </div>
 
             </div>
-            <div className="btn btn-md btn-primary">Edit</div>
         </div>
     );
 };
