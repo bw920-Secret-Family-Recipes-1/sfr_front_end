@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
+import AxiosAuth from '../../utils/AxiosAuth'
 
 const AddRecipe = ({ errors, touched, values }) => {
   return (
@@ -88,9 +89,17 @@ const FormikApp = withFormik({
     category: Yup.string()
       .oneOf(['appetizer', 'entree', 'dessert', 'beverage']).required('please choose a category'),
   }),
-  handleSubmit(values, { resetForm }) {
-    console.log(values);
-    resetForm();
+  handleSubmit(values, { setStatus }) {
+    console.log("Recipe added");
+    AxiosAuth()
+    .post("https://secretrecipebw.herokuapp.com/users/:id/recipes", values)
+    .then(res => {
+        setStatus(res.data);
+        console.log(res);
+        console.log("Recipe submitted");
+        window.location.assign('/user')
+      })
+      .catch(error => console.log(error.response));
   }
 })
 const SingleRecipe = FormikApp(AddRecipe)
