@@ -32,7 +32,7 @@ const AuthState = props => {
                 });
             })
             .catch(err => console.log(err));
-    };
+    }
 
     // Update User
     const updateUser = (id, formData) => {

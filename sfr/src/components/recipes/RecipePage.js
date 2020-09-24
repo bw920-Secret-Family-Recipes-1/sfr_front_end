@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AxiosAuth from '../../utils/AxiosAuth'
 import { useParams, Link } from 'react-router-dom';
 
@@ -7,9 +7,16 @@ import { RecipeContext } from '../../context/RecipeContext'
 // Style
 import './recipe.css';
 
+const initialRecipe = {
+    
+}
+
 const RecipePage = () => {
     const [recipes, setRecipes] = useContext(RecipeContext);
     const { id } = useParams();
+
+    const [editing, setEditing] = useState(false);
+    const [colorToEdit, setColorToEdit] = useState(initialRecipe);
 
     useEffect(() => {
         AxiosAuth()
