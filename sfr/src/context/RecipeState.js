@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import AxiosAuth from '../../utils/AxiosAuth';
-import RecipeContext from './RecipeContext';
+import {RecipeContext} from './RecipeContext'
 import RecipeReducer from './RecipeReducer';
 import { GET_RECIPES, ADD_RECIPE, DELETE_RECIPE, UPDATE_RECIPE } from '../Types';
 
@@ -14,14 +14,13 @@ const RecipeState = props => {
     const getRecipes = id => {
         AxiosAuth()
             .get(`/recipes/${id}`)
-            .then(res =>{
+            .then(res => {
                 console.log("recipe:", res)
                 dispatch({
                     type: GET_RECIPES,
                     payload: res.data
                 })
             }
-                
             )
             .catch(err => console.log(err));
     };

@@ -11,7 +11,7 @@ const RecipeList = () => {
     return (
         <div >
             <div className="user-banner">
-                <h3>My Recipes!</h3>
+                <h3>My Recipes {recipes.message}!</h3>
             </div>
 
             <div className="recipe-list">

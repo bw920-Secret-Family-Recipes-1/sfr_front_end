@@ -23,6 +23,17 @@ const RecipePage = () => {
             });
     }, [id]);
 
+    const deleteRecipe = recipe => {
+        AxiosAuth()
+            .delete(`https://secretrecipebw.herokuapp.com/recipes/${id}`)
+            .then((res) => {
+                setRecipes(recipes.filter((thisRecipe) => thisRecipe.id !== id))
+                console.log(`Deleted ${recipe.id}`, res)
+                window.location.assign('/user');
+            })
+            .catch(err => console.log('error deleting recipe',err));
+    };
+
     // AxiosAuth()
     //     .put(`https://secretrecipebw.herokuapp.com/recipes/${Edit.id}`, recipeToEdit)
     //     .then((res) => {
@@ -41,6 +52,7 @@ const RecipePage = () => {
     return (
         <div className="recipe-page-container">
             <Link className="btn btn-md btn-primary" to={`/recipe/`}>Edit</Link>
+            <button onClick={() => deleteRecipe(recipes.id)}>Delete</button>
             <div className="recipe-wrapper">
                 <h2 className="recipe-name">{recipes.recipeName}</h2>
                 <em className="category">{recipes.categoryName}</em>

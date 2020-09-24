@@ -56,8 +56,8 @@ const FormikApp = withFormik({
       .then(res => {
         setStatus(res.data);
         localStorage.setItem('token', res.data.token)
-        console.log("Login successful", res);
-        window.location.assign('/user');
+        console.log("login successful", res);
+        // window.location.assign('/user');
       })
       .catch(error => console.log(error.response));
   }
