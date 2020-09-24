@@ -11,7 +11,7 @@ export const RecipeProvider = (props) => {
             AxiosAuth()
                 .get('https://secretrecipebw.herokuapp.com/recipes')
                 .then(res => {
-                    // console.log('recipes: ', res);
+                    console.log('recipes: ', res);
                     setRecipes(res.data);
                 })
                 .catch(error => {
