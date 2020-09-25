@@ -3,12 +3,43 @@ import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
 import AxiosAuth from '../../utils/AxiosAuth'
 
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { TextField } from 'formik-material-ui';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    background: '#B85156',
+    color: 'white',
+  },
+}));
+
+
 const Login = ({ errors, touched }) => {
+  const classes = useStyles();
   return (
-    <div className='form-container'>
-      <h1>Login!</h1>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className = {classes.paper}>
+
+<Typography component="h1" variant="h5">Login</Typography>
       <Form>
-        <Field
+        <Field component={TextField}
+        variant="outlined"
+        margin="normal"
+        fullWidth
           type='text'
           name='username'
           placeholder='Username'
@@ -16,7 +47,10 @@ const Login = ({ errors, touched }) => {
           className='input'
         />
         {touched.username && errors.username && <p className='error'>{errors.username}</p>}
-        <Field
+        <Field component={TextField}
+        variant="outlined"
+        margin="normal"
+        fullWidth
           type='password'
           name='password'
           autoComplete='new-password'
@@ -26,11 +60,12 @@ const Login = ({ errors, touched }) => {
         {touched.password && errors.password && (
           <p className='error'>{errors.password}</p>
         )}
-        <button type='submit' className='submit'>
+        <Button type='submit' fullWidth variant="contained" className={classes.submit}>
           Submit
-        </button>
+        </Button>
       </Form>
-    </div>
+      </div>
+    </Container>
   )
 }
 
