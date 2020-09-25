@@ -160,7 +160,7 @@ const FormikApp = withFormik({
         setStatus(res.data);
         console.log(res);
         console.log("Recipe submitted");
-        // window.location.assign('/user')
+        window.location.assign('/user')
       })
       .catch(error => console.log(error.response));
   }
