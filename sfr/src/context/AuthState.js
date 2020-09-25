@@ -3,6 +3,9 @@ import AuthContext from './AuthContext';
 import AuthReducer from './AuthReducer';
 import AxiosAuth from '../utils/AxiosAuth';
 import { USER_LOADED, LOGIN, UPDATE_USER, LOGOUT } from './Types';
+import { createContext } from 'react';
+
+export const authContext = createContext();
 
 const AuthState = props => {
     const initialState = {

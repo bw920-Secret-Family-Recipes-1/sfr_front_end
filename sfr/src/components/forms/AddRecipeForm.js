@@ -92,7 +92,7 @@ const FormikApp = withFormik({
   handleSubmit(values, { setStatus }) {
     console.log("Recipe added");
     AxiosAuth()
-    .post("https://secretrecipebw.herokuapp.com/users/:id/recipes", values)
+    .post(`https://secretrecipebw.herokuapp.com/users/:id/recipes`, values)
     .then(res => {
         setStatus(res.data);
         console.log(res);
