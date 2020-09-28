@@ -6,7 +6,8 @@ const AxiosAuth = () => {
     return axios.create({
         baseURL: "https://secretrecipebw.herokuapp.com/",
         headers: {
-            Authorization: token
+            Authorization: token,
+            'Content-Type': 'application/json'
         }
     });
 };

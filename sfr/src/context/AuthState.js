@@ -3,6 +3,9 @@ import AuthContext from './AuthContext';
 import AuthReducer from './AuthReducer';
 import AxiosAuth from '../utils/AxiosAuth';
 import { USER_LOADED, LOGIN, UPDATE_USER, LOGOUT } from './Types';
+import { createContext } from 'react';
+
+export const authContext = createContext();
 
 const AuthState = props => {
     const initialState = {
@@ -32,7 +35,7 @@ const AuthState = props => {
                 });
             })
             .catch(err => console.log(err));
-    };
+    }
 
     // Update User
     const updateUser = (id, formData) => {
